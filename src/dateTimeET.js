@@ -1,35 +1,33 @@
-const dateFormattedET = function(){
-    let timeNow = new Date();
-    let dateNow = timeNow.getDate();
-    let monthNow = timeNow.getMonth();
-    let yearNow = timeNow.getFullYear();
-    let dayNow = timeNow.getDay();
-    let dayNamesET = ['pühapäev', 'esmaspäev', 'teisipäev', 'kolmapäev', 'neljapäev', 'reede', 'laupäev',];
-    let kalendri_tüüp = Math.floor(Math.random());
-    let monthNamesET = ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'];
-    let monthNamesRahvas = ['näärikuu', 'küünlakuu', 'paastukuu', 'jürikuu', 'lehekuu', 'jaanikuu', 'heinakuu', 'lõikuskuu', 'mihklikuu', 'viinakuu', 'talvekuu', 'jõulukuu'];
-    if (kalendri_tüüp == 1){
-        return dayNamesET[dayNow] + ' ' + dateNow + '.' + monthNamesET[monthNow] + ' ' + 'aasta ' + yearNow;
-    }
-    else if (kalendri_tüüp == 0){
-        return dayNamesET[dayNow] + ' ' + dateNow + '.' + monthNamesRahvas[monthNow] + ' ' + 'aasta ' + yearNow;
-    }
+const dateFormattedET = function(opt){
+	let timeNow = new Date();
+	let monthNamesET = ['jaanuar', 'veebruar', 'mÃ¤rts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'];
+	if(opt == 1){
+		monthNamesET = ['nÃ¤Ã¤rikuu', 'kÃ¼Ã¼nlakuu', 'paastukuu', 'jÃ¼rikuu', 'lehekuu', 'jaanikuu', 'heinakuu', 'lÃµikuskuu', 'mihklikuu', 'viinakuu', 'talvekuu', 'jÃµulukuu'];
+	}
+	return timeNow.getDate() + '. ' + monthNamesET[timeNow.getMonth()] + ' ' + timeNow.getFullYear();
+}
+
+const addLeadZero = function(numValue){
+	if(numValue < 10){
+		numValue = '0' + numValue;
+	}
+	return numValue;
 }
 
 const timeFormattedET = function(){
-    let timeNow = new Date();
-    let hourNow = timeNow.getHours();
-    let minuteNow = timeNow.getMinutes();
-    let secondNow = timeNow.getSeconds();
-    //console.log(timeNow);
-    if (minuteNow < 10){
-        minuteNow = '0' + timeNow.getMinutes();
-    }
-    if (secondNow < 10){
-        secondNow = '0' + timeNow.getSeconds();
-    }
-    return hourNow + ':' + minuteNow + ':' + secondNow;
+	let timeNow = new Date();
+	let hourNow = timeNow.getHours();
+	let minuteNow = timeNow.getMinutes();
+	let secondNow = timeNow.getSeconds();
+	let timeFormatted = hourNow + ':' + addLeadZero(minuteNow) + ':' + addLeadZero(secondNow);
+	return timeFormatted;
 }
 
-//ekspordin kõik vajalikud funtktsioonid koos mugavamate nimedega
-module.exports = {time: timeFormattedET, date: dateFormattedET};
+const weekdayET = function(){
+	let weekDay = new Date().getDay();
+	const weekdayNamesET = ['pÃ¼hapÃ¤ev', 'esmaspÃ¤ev', "teisipÃ¤ev", 'kolmapÃ¤ev', 'neljapÃ¤ev', 'reede', 'laupÃ¤ev'];
+	return weekdayNamesET[weekDay];
+}
+
+//ekspordin kÃµik vajaliku
+module.exports = {fullDate: dateFormattedET, fullTime: timeFormattedET, day: weekdayET}
